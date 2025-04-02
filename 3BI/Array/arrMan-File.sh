@@ -27,7 +27,7 @@ findElement() {
 			return
 		fi
 	done
-	echo "Non trovato"
+	echo "Elemento $elem non trovato"
 }
 
 findMinMax(){
@@ -85,6 +85,18 @@ then
 	exit 1
 fi
 
+location=$HOME/Desktop
+file=$location/res.txt
+
+#puliamo eventuali precedenti esecuzioni
+if [ -f $file ]
+then
+	rm $file
+	touch $file
+else
+	touch $file
+fi
+
 arrLength=$1
 arr=()
 
@@ -93,14 +105,16 @@ do
 	arr[$e]=$(($RANDOM % (100-4) +4))
 done
 
+echo "Array iniziale: ${arr[@]}" >> $file
 echo "Array iniziale: ${arr[@]}"
 
-
 totalSum=$(totalSum)
-echo "La somma totale degli elementi è: $totalSum"
-echo "La media è: $(avgVal)"
-echo "$(findElement)"
-echo "Il minimo e il massimo valore dell'array sono: $(findMinMax)"
-echo "Array numeri pari: $(extractEvenArray)"
+echo "La somma totale degli elementi è: $totalSum" >> $file
+echo "La media è: $(avgVal)">> $file
+echo "$(findElement)">> $file
+echo "Il minimo e il massimo valore dell'array sono: $(findMinMax)" >> $file
+echo "Array numeri pari: $(extractEvenArray)" >> $file
+
 swapArrayElems
-echo ${arr[@]}
+echo ${arr[@]} >> $file
+
