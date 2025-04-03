@@ -116,5 +116,5 @@ echo "Il minimo e il massimo valore dell'array sono: $(findMinMax)" >> $file
 echo "Array numeri pari: $(extractEvenArray)" >> $file
 
 swapArrayElems
-echo ${arr[@]} >> $file
+echo "Array dopo swap: ${arr[@]}" >> $file
 
