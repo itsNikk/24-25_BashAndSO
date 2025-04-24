@@ -26,6 +26,7 @@ versa() {
 		read -p "Inserire valore da versare: " v
 		if [ $v -gt 0 ]
 		then
+			#equivalente a saldo=$((saldo+v))
 			((saldo+=v))
 			storico[${#storico[@]}]="+$v"
 			echo "Saldo aggiornato"
