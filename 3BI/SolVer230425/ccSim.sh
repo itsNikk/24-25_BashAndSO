@@ -4,12 +4,12 @@ saldo=0
 storico=()
 
 mostra_menu() {
-    echo "=== Menu Conto Corrente ==="
-    echo "1) Versamento"
-    echo "2) Prelievo"
-    echo "3) Visualizza saldo"
-    echo "4) Esci"
-    echo "5) Storico transazioni"
+    	echo "=== Menu Conto Corrente ==="
+    	echo "1) Versamento"
+    	echo "2) Prelievo"
+    	echo "3) Visualizza saldo"
+    	echo "4) Esci"
+    	echo "5) Storico transazioni"
 }
 
 versa() {
@@ -88,7 +88,7 @@ saveTransactionsToFile() {
 	echo ${storico[@]} > $fileName
 
 	read -p "Inserisci valore ad cercare nel file: " v
-	grep -o $v $fileName
+	echo $(grep -o $v $fileName | wc -l)
 }
 
 # Codice 'Main'
