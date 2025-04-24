@@ -13,14 +13,32 @@ mostra_menu() {
 }
 
 versa() {
-	read -p "Inserire valore da versare: " v
-	if [ $v -gt 0 ]
+	# Controllo subito la condizione che invalida la funzione e
+	# interrompo SOLO l'esecuzione di tale funzione con return, non exit.
+	if [ $# -gt 1 ]
 	then
+		echo "Non è ammesso più di un parametro"
+		return 0
+	fi
+
+	if [ $# -eq 0 ]
+	then
+		read -p "Inserire valore da versare: " v
+		if [ $v -gt 0 ]
+		then
+			((saldo+=v))
+			storico[${#storico[@]}]="+$v"
+			echo "Saldo aggiornato"
+		else
+			echo "Valore non corretto per un prelievo ($v)"
+		fi
+	elif [ $1 == "r" ]
+	then
+		#NOTA: gli spazi non sono necessari, li ho messi solo per leggibilità
+		v=$(( $RANDOM % (500-50) +50 ))
 		((saldo+=v))
 		storico[${#storico[@]}]="+$v"
 		echo "Saldo aggiornato"
-	else
-		echo "Valore non corretto per un prelievo ($v)"
 	fi
 }
 
@@ -41,20 +59,42 @@ mostra_saldo() {
 }
 
 history() {
-	for elem in ${storico[@]}
-	do
-		echo -n "$elem "
-	done
-	echo
+
+	if [ $# -eq 0 ] || [ $# -eq 0 ]
+	then
+		echo "Storico completo:"
+		for elem in ${storico[@]}
+		do
+			echo -n "$elem "
+		done
+		#Solo per andare a capo
+		echo
+	elif [ $1 -gt 0 ]
+	then
+		echo ${storico[@]:0:$1}
+	else
+		echo "Parametro non valido ($1)"
+	fi
+}
+
+saveTransactionsToFile() {
+	location=$HOME/Desktop
+	fileName=".transactions.txt"
+	cd $location
+	echo ${storico[@]} > $fileName
+
+	read -p "Inserisci valore ad cercare nel file: " v
+	grep -o $v $fileName
 }
 
 # Codice 'Main'
 while true; do
-    mostra_menu
-    read -p "Scegli: " c 
-    case $c in
+	mostra_menu
+	#Una soluzione efficace, ma non l'unica, per gestire l'evententuale parametro in ingresso alle funzioni.
+    	read -p "Scegli: " c p
+	case $c in
 	1)
-		versa
+		versa $p
 	;;
 	2)
 		preleva
@@ -67,11 +107,10 @@ while true; do
 		exit 1
 	;;
 	5)
-		history
+		history $p
 	;;
 	*)
 		echo "Operazione non riconosciuta ($c)"
 	;;
-    esac
+    	esac
 done
-
