@@ -106,6 +106,7 @@ while true; do
 		mostra_saldo
 	;;
 	4)
+		saveTransactionsToFile
 		echo "Chiusura..."
 		exit 1
 	;;
