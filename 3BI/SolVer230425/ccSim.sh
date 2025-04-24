@@ -71,7 +71,7 @@ history() {
 		echo
 	elif [ $1 -gt 0 ]
 	then
-		#Slicing, per questo punto NON c'era alcun limite .
+		#Slicing, per questo punto NON c'era alcun limite implementativo.
 		#Si poteva pensare a qualche controllo più fine
 		#prima di stampare ma non era richiesto.
 		echo ${storico[@]:0:$1}
