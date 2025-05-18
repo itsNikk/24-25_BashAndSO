@@ -19,6 +19,7 @@ init() {
 	then
 		name="MercanteGranpasso"
 	fi
+	#Just for fun, nel testo si chiedevano 100 monete fisse.
 	capitale=$(( RANDOM % (100-20) +20 ))
 	echo "Benvenuto $name. Il suo capitale è di $capitale."
 }
